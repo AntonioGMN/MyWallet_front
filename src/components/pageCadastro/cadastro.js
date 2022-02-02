@@ -2,7 +2,7 @@ import MainStyle from "./styleCadastro";
 import logo from "../imgs/logo.png";
 import { Link } from "react-router-dom";
 
-export default function Cadastro() {
+export default function TelaCadastro() {
 	return (
 		<MainStyle>
 			<img src={logo} alt="erro no logo" />
