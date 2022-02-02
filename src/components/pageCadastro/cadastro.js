@@ -17,7 +17,7 @@ export default function TelaCadastro() {
 	async function cadastrar(e) {
 		e.preventDefault();
 
-		if (user.password != confirPassword) {
+		if (user.password !== confirPassword) {
 			return alert("As senhas tem que ser iguais");
 		}
 
@@ -28,7 +28,6 @@ export default function TelaCadastro() {
 			console.log(error);
 			alert("Erro no Cadastro. Tente Novamente");
 		}
-		console.log(user);
 	}
 
 	return (
