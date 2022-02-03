@@ -1,6 +1,7 @@
 import { MainStyled, HeaderStyled, DivStyled } from "./stylesSaldo";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 export default function TelaSaldo() {
 	return (
@@ -11,14 +12,18 @@ export default function TelaSaldo() {
 			</HeaderStyled>
 			<MainStyled></MainStyled>
 			<DivStyled>
-				<button>
-					<IoMdAddCircleOutline />
-					<p>Nova entrada</p>
-				</button>
-				<button>
-					<IoMdRemoveCircleOutline />
-					<p>Nova saída</p>
-				</button>
+				<Link to="/transacao/entrada">
+					<button>
+						<IoMdAddCircleOutline />
+						<p>Nova entrada</p>
+					</button>
+				</Link>
+				<Link to="/transacao/saída">
+					<button>
+						<IoMdRemoveCircleOutline />
+						<p>Nova saída</p>
+					</button>
+				</Link>
 			</DivStyled>
 		</>
 	);
