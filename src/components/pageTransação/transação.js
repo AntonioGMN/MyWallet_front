@@ -1,61 +1,64 @@
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
+import MainStyle from "./styleTransaçao";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useAuth } from "../../context/useContext";
 
 export default function TelaTransação() {
+	const { token } = useAuth();
 	const { type } = useParams();
+	const [transação, setTransação] = useState({
+		descrição: "",
+		valor: "",
+		type: type,
+	});
+
+	useEffect(() => {
+		if (!token) {
+			alert("token nulo");
+			navegate("/");
+		}
+	}, [token]);
+
+	const navegate = useNavigate();
+
+	async function enviar(e) {
+		e.preventDefault();
+		console.log(token);
+		console.log(transação);
+
+		try {
+			await axios.post("http://localhost:5000/saldo", transação, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+
+			navegate("/saldo");
+			return console.log(transação, typeof transação.valor, token);
+		} catch (error) {
+			return console.log(error);
+		}
+	}
 
 	return (
 		<MainStyle>
 			<h1>Nova {type}</h1>
-			<form>
-				<input placeholder="Valor"></input>
-				<input placeholder="Descrição"></input>
-				<input placeholder={`Salvar ${type}`}></input>
+			<form onSubmit={enviar}>
+				<input
+					type="number"
+					placeholder="Valor"
+					value={transação.valor}
+					onChange={(e) =>
+						setTransação({ ...transação, valor: Number(e.target.value) })
+					}
+				></input>
+				<input
+					type="text"
+					placeholder="Descrição"
+					value={transação.descrição}
+					onChange={(e) => setTransação({ ...transação, descrição: e.target.value })}
+				></input>
+				<input type="submit" placeholder={`Salvar ${type}`}></input>
 			</form>
 		</MainStyle>
 	);
 }
-
-const MainStyle = styled.main`
-	display: flex;
-	flex-direction: column;
-	padding: 20px;
-	gap: 40px;
-
-	h1 {
-		font-size: 26px;
-		font-weight: 700;
-		color: #fff;
-	}
-
-	form {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		gap: 13px;
-	}
-
-	input {
-		height: 58px;
-		width: 100%;
-		padding-left: 10px;
-		border: none;
-		border-radius: 5px;
-		font-family: Raleway;
-
-		::placeholder {
-			font-size: 20px;
-			font-weight: 400;
-			color: #000000;
-		}
-		:last-child {
-			background: #a328d6;
-			::placeholder {
-				font-weight: 700;
-				text-align: center;
-				color: #ffffff;
-			}
-		}
-	}
-`;
