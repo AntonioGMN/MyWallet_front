@@ -24,8 +24,6 @@ export default function TelaTransação() {
 
 	async function enviar(e) {
 		e.preventDefault();
-		console.log(token);
-		console.log(transação);
 
 		try {
 			await axios.post("http://localhost:5000/saldo", transação, {
@@ -46,11 +44,16 @@ export default function TelaTransação() {
 				<input
 					type="number"
 					placeholder="Valor"
-					value={transação.valor}
+					value={parseFloat(transação.valor)}
+					//step="0.01"
+					//pattern="^\d*(\.\d{0,2})?$"
 					onChange={(e) =>
-						setTransação({ ...transação, valor: Number(e.target.value) })
+						setTransação({
+							...transação,
+							valor: parseFloat(e.target.value),
+						})
 					}
-				></input>
+				/>
 				<input
 					type="text"
 					placeholder="Descrição"
