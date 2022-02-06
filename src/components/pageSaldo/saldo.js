@@ -13,8 +13,9 @@ import { useAuth } from "../../context/useContext";
 import axios from "axios";
 
 export default function TelaSaldo() {
-	const { token } = useAuth();
 	const [saldo, setSaldo] = useState(null);
+	const [user, setUser] = useState(null);
+	const { token } = useAuth();
 	const navegate = useNavigate();
 
 	async function getSaldo() {
@@ -23,57 +24,22 @@ export default function TelaSaldo() {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			setSaldo(promise.data);
+			return;
 		} catch (error) {
 			return console.log(error);
 		}
 	}
 
-	useEffect(() => {
-		if (!token) {
-			alert("token nulo");
-			navegate("/");
+	async function getUser() {
+		try {
+			const promise = await axios.get("http://localhost:5000/user", {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+			setUser(promise.data);
 			return;
+		} catch (error) {
+			return console.log(error);
 		}
-		getSaldo();
-		return;
-	}, [token]);
-
-	function Movimentações() {
-		if (saldo) {
-			if (saldo.length === 0)
-				return <div>Não há registros de entrada ou saída</div>;
-			return (
-				<>
-					<section>
-						{saldo.map((s) => (
-							<ArticleStyled key={saldo._id} type={s.type}>
-								<p>
-									<span>{s.data}</span> {s.descrição}
-								</p>
-								<strong>{s.valor}</strong>
-							</ArticleStyled>
-						))}
-					</section>
-					<ValorFinal obj={saldo} />
-				</>
-			);
-		}
-		return "carregando";
-	}
-
-	function ValorFinal({ obj }) {
-		let soma = 0;
-		for (let i = 0; i < obj.length; i++) {
-			let n = Number(obj[i].valor);
-			console.log(n);
-			if (obj[i].type === "saída") soma += -1 * n;
-			else soma += n;
-		}
-		return (
-			<SectionStyled cor={soma}>
-				<p>Saldo</p> <span>{soma}</span>
-			</SectionStyled>
-		);
 	}
 
 	async function logout() {
@@ -88,29 +54,76 @@ export default function TelaSaldo() {
 		}
 	}
 
-	return (
-		<>
-			<HeaderStyled>
-				<h1>Olá, fulano</h1>
-				<RiLogoutBoxRLine onClick={logout} />
-			</HeaderStyled>
-			<MainStyled>
-				<Movimentações />
-			</MainStyled>
-			<DivStyled>
-				<Link to="/transacao/entrada">
-					<button>
-						<IoMdAddCircleOutline />
-						<p>Nova entrada</p>
-					</button>
-				</Link>
-				<Link to="/transacao/saída">
-					<button>
-						<IoMdRemoveCircleOutline />
-						<p>Nova saída</p>
-					</button>
-				</Link>
-			</DivStyled>
-		</>
-	);
+	useEffect(() => {
+		if (token) {
+			getSaldo();
+			getUser();
+			return;
+		}
+		alert("token nulo");
+		navegate("/");
+		return;
+	}, [token]);
+
+	function Movimentações() {
+		if (saldo.length === 0)
+			return <div>Não há registros de entrada ou saída</div>;
+		return (
+			<>
+				<section>
+					{saldo.map((s) => (
+						<ArticleStyled key={saldo._id} type={s.type}>
+							<p>
+								<span>{s.data}</span> {s.descrição}
+							</p>
+							<strong>{s.valor}</strong>
+						</ArticleStyled>
+					))}
+				</section>
+				<ValorFinal obj={saldo} />
+			</>
+		);
+	}
+
+	function ValorFinal({ obj }) {
+		let soma = 0;
+		for (let i = 0; i < obj.length; i++) {
+			let n = Number(obj[i].valor);
+			if (obj[i].type === "saída") soma += -1 * n;
+			else soma += n;
+		}
+		return (
+			<SectionStyled cor={soma}>
+				<p>Saldo</p> <span>{soma}</span>
+			</SectionStyled>
+		);
+	}
+
+	if (user) {
+		return (
+			<>
+				<HeaderStyled>
+					<h1>Olá, {user.name}</h1>
+					<RiLogoutBoxRLine onClick={logout} />
+				</HeaderStyled>
+				<MainStyled>
+					<Movimentações />
+				</MainStyled>
+				<DivStyled>
+					<Link to="/transacao/entrada">
+						<button>
+							<IoMdAddCircleOutline />
+							<p>Nova entrada</p>
+						</button>
+					</Link>
+					<Link to="/transacao/saída">
+						<button>
+							<IoMdRemoveCircleOutline />
+							<p>Nova saída</p>
+						</button>
+					</Link>
+				</DivStyled>
+			</>
+		);
+	} else return <h1>Carregando </h1>;
 }

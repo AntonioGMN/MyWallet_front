@@ -13,14 +13,15 @@ export default function TelaTransação() {
 		type: type,
 	});
 
+	const navegate = useNavigate();
+
 	useEffect(() => {
 		if (!token) {
 			alert("token nulo");
 			navegate("/");
+			return;
 		}
 	}, [token]);
-
-	const navegate = useNavigate();
 
 	async function enviar(e) {
 		e.preventDefault();
@@ -37,6 +38,18 @@ export default function TelaTransação() {
 		}
 	}
 
+	function valorEfetivo(e) {
+		let num = Number(e.target.value);
+		let tamanho = e.target.value.length;
+		let n;
+
+		if (tamanho === 1) n = num / 100;
+		else n = (num * 10).toFixed(2);
+
+		setTransação({ ...transação, valor: n });
+		return;
+	}
+
 	return (
 		<MainStyle>
 			<h1>Nova {type}</h1>
@@ -44,15 +57,10 @@ export default function TelaTransação() {
 				<input
 					type="number"
 					placeholder="Valor"
-					value={parseFloat(transação.valor)}
-					//step="0.01"
+					value={transação.valor}
+					step="0.01"
 					//pattern="^\d*(\.\d{0,2})?$"
-					onChange={(e) =>
-						setTransação({
-							...transação,
-							valor: parseFloat(e.target.value),
-						})
-					}
+					onChange={valorEfetivo}
 				/>
 				<input
 					type="text"
