@@ -22,7 +22,7 @@ export default function TelaCadastro() {
 		}
 
 		try {
-			await axios.post("http://localhost:5000/sign-up", user);
+			await axios.post(`${process.env.REACT_APP_API}/sign-up`, user);
 			navegar("/");
 		} catch (error) {
 			console.log(error);

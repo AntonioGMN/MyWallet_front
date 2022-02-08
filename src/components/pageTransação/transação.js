@@ -27,7 +27,7 @@ export default function TelaTransação() {
 		e.preventDefault();
 
 		try {
-			await axios.post("http://localhost:5000/saldo", transação, {
+			await axios.post(`${process.env.REACT_APP_API}/saldo`, transação, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 

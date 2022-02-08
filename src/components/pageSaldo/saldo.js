@@ -20,7 +20,7 @@ export default function TelaSaldo() {
 
 	async function getSaldo() {
 		try {
-			const promise = await axios.get("http://localhost:5000/saldo", {
+			const promise = await axios.get(`${process.env.REACT_APP_API}/saldo`, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			setSaldo(promise.data);
@@ -32,7 +32,7 @@ export default function TelaSaldo() {
 
 	async function getUser() {
 		try {
-			const promise = await axios.get("http://localhost:5000/user", {
+			const promise = await axios.get(`${process.env.REACT_APP_API}/user`, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			setUser(promise.data);
@@ -44,7 +44,7 @@ export default function TelaSaldo() {
 
 	async function logout() {
 		try {
-			await axios.delete("http://localhost:5000/logout", {
+			await axios.delete(`${process.env.REACT_APP_API}/logout`, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			alert("delogado");

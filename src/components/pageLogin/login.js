@@ -31,7 +31,10 @@ export default function TelaLogin() {
 		}
 
 		try {
-			const promise = await axios.post("http://localhost:5000/sign-in", user);
+			const promise = await axios.post(
+				`${process.env.REACT_APP_API}/sign-in`,
+				user
+			);
 			setToken(promise.data);
 			navegate("/saldo");
 		} catch (error) {
