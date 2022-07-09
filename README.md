@@ -30,8 +30,8 @@ The following tools and frameworks were used in the construction of the project:
 ## How to run
 
 1. Clone this repository
-2. Clone the back-end repository at https://github.com/ruineto-dev/api-my-wallet
-3. Follow instructions to run back-end at https://github.com/ruineto-dev/api-my-wallet
+2. Clone the back-end repository at https://github.com/AntonioGMN/MyWallet_back
+3. Follow instructions to run back-end repository
 4. Install dependencies
 ```bash
 npm i
