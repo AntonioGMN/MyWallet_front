@@ -94,7 +94,7 @@ export default function TelaSaldo() {
 		}
 		return (
 			<SectionStyled cor={soma}>
-				<p>Saldo</p> <span>{soma}</span>
+				<p>Saldo</p> <span>{soma.toFixed(2)}</span>
 			</SectionStyled>
 		);
 	}

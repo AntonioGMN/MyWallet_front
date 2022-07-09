@@ -65,10 +65,12 @@ const HeaderStyled = styled.header`
 const DivStyled = styled.div`
 	display: flex;
 	justify-content: space-between;
+	max-width: 100%;
+	overflow-x: hidden;
 
 	button {
 		height: 15vh;
-		width: 42vw;
+		min-width: 47vw;
 		border: none;
 		border-radius: 5px;
 		background: #a328d6;

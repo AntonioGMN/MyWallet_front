@@ -35,6 +35,7 @@ export default function TelaLogin() {
 				`${process.env.REACT_APP_API}/sign-in`,
 				user
 			);
+			console.log(promise.data)
 			setToken(promise.data);
 			navegate("/saldo");
 		} catch (error) {
