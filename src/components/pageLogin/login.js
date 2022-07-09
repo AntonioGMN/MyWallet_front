@@ -1,19 +1,25 @@
 import MainStyle from "./styleLogin";
 import logo from "../imgs/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import joi from "joi";
 import axios from "axios";
 import { useAuth } from "../../context/useContext";
 
 export default function TelaLogin() {
-	const { setToken } = useAuth();
+	const { saveToken, token } = useAuth();
 	const [user, setUser] = useState({
 		email: "",
 		password: "",
 	});
 
 	const navegate = useNavigate();
+	
+	useEffect(()=> { 
+		if(token){
+		navegate("/saldo")}
+		return
+	}, [])
 
 	async function entrar(e) {
 		e.preventDefault();
@@ -35,8 +41,7 @@ export default function TelaLogin() {
 				`${process.env.REACT_APP_API}/sign-in`,
 				user
 			);
-			console.log(promise.data)
-			setToken(promise.data);
+			saveToken(promise.data);
 			navegate("/saldo");
 		} catch (error) {
 			return error;

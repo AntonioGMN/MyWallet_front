@@ -14,8 +14,7 @@ import axios from "axios";
 
 export default function TelaSaldo() {
 	const [saldo, setSaldo] = useState(null);
-	const [user, setUser] = useState(null);
-	const { token } = useAuth();
+	const { token, user, logout } = useAuth();
 	const navegate = useNavigate();
 
 	async function getSaldo() {
@@ -30,49 +29,23 @@ export default function TelaSaldo() {
 		}
 	}
 
-	async function getUser() {
-		try {
-			const promise = await axios.get(`${process.env.REACT_APP_API}/user`, {
-				headers: { Authorization: `Bearer ${token}` },
-			});
-			setUser(promise.data);
-			return;
-		} catch (error) {
-			return console.log(error);
-		}
-	}
-
-	async function logout() {
-		try {
-			await axios.delete(`${process.env.REACT_APP_API}/logout`, {
-				headers: { Authorization: `Bearer ${token}` },
-			});
-			alert("delogado");
-			navegate("/");
-		} catch {
-			alert("erro ao deslogar");
-		}
-	}
-
 	useEffect(() => {
 		if (token) {
 			getSaldo();
-			getUser();
 			return;
 		}
-		alert("token nulo");
 		navegate("/");
 		return;
 	}, [token]);
 
 	function Movimentações() {
-		if (saldo.length === 0)
-			return <div>Não há registros de entrada ou saída</div>;
+		if (saldo.length === 0) return <div>Não há registros de entrada ou saída</div>;
+		
 		return (
 			<>
 				<section>
 					{saldo.map((s) => (
-						<ArticleStyled key={saldo._id} type={s.type}>
+						<ArticleStyled key={s._id} type={s.type}>
 							<p>
 								<span>{s.data}</span> {s.descrição}
 							</p>
@@ -99,7 +72,7 @@ export default function TelaSaldo() {
 		);
 	}
 
-	if (user) {
+	if (saldo && user) {
 		return (
 			<>
 				<HeaderStyled>

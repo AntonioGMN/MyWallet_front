@@ -5,14 +5,11 @@ import TelaCadastro from "./components/pageCadastro/cadastro";
 import TelaSaldo from "./components/pageSaldo/saldo";
 import TelaTransação from "./components/pageTransação/transação";
 
-import UserContext from "./context/useContext";
-import { useState } from "react";
+import AuthProvider from "./context/useContext";
 
 export default function App() {
-	const [token, setToken] = useState(null);
-
 	return (
-		<UserContext.Provider value={{ token, setToken }}>
+		<AuthProvider >
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<TelaLogin />} />
@@ -21,6 +18,6 @@ export default function App() {
 					<Route path="/transacao/:type" element={<TelaTransação />} />
 				</Routes>
 			</BrowserRouter>
-		</UserContext.Provider>
+		</AuthProvider>
 	);
 }
