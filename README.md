@@ -2,8 +2,7 @@
 
 An easy to use financial manager. Track your revenues and expenses to learn how you spend your money and know all the time how much you have.
 
-<!-- <img src="/assets/my-wallet-usage.gif" /> -->
-
+![myWallet](https://user-images.githubusercontent.com/93607034/178122209-9f0b14aa-86bf-4d09-bb6c-17a4595e8199.gif)
 
 ## About
 
