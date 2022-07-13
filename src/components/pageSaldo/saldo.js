@@ -74,29 +74,29 @@ export default function TelaSaldo() {
 
 	if (saldo && user) {
 		return (
-			<>
-				<HeaderStyled>
-					<h1>Olá, {user.name}</h1>
-					<RiLogoutBoxRLine onClick={logout} />
-				</HeaderStyled>
-				<MainStyled>
-					<Movimentações />
-				</MainStyled>
-				<DivStyled>
-					<Link to="/transacao/entrada">
-						<button>
-							<IoMdAddCircleOutline />
-							<p>Nova entrada</p>
-						</button>
-					</Link>
-					<Link to="/transacao/saída">
-						<button>
-							<IoMdRemoveCircleOutline />
-							<p>Nova saída</p>
-						</button>
-					</Link>
-				</DivStyled>
-			</>
-		);
+      <div style={ {padding: '15px'} }>
+        <HeaderStyled>
+          <h1>Olá, {user.name}</h1>
+          <RiLogoutBoxRLine onClick={logout} />
+        </HeaderStyled>
+        <MainStyled>
+          <Movimentações />
+        </MainStyled>
+        <DivStyled>
+          <Link to="/transacao/entrada">
+            <button>
+              <IoMdAddCircleOutline />
+              <p>Nova entrada</p>
+            </button>
+          </Link>
+          <Link to="/transacao/saída">
+            <button>
+              <IoMdRemoveCircleOutline />
+              <p>Nova saída</p>
+            </button>
+          </Link>
+        </DivStyled>
+      </div>
+    );
 	} else return <h1>Carregando </h1>;
 }
