@@ -25,8 +25,9 @@ export default function TelaCadastro() {
 			await axios.post(`${process.env.REACT_APP_API}/sign-up`, user);
 			navegar("/");
 		} catch (error) {
+			console.log(`${process.env.REACT_APP_API}/sign-up`);
 			console.log(error);
-			alert("Erro no Cadastro. Tente Novamente");
+			//alert("Erro no Cadastro. Tente Novamente");
 		}
 	}
 
